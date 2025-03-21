@@ -9,7 +9,8 @@ public class App {
         Connection conexion = getConnection();
         //exampleStatement(conexion);
         //buscarClientes(conexion);
-        buscarClientePorCodigo(conexion, 1);
+        //buscarClientePorCodigo(conexion, 1);
+        buscarClientesPorEmpleado(conexion, 5);
         cerrarConexion(conexion);
     }
     public static Connection getConnection() throws Exception {
@@ -75,7 +76,30 @@ public class App {
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("nombre_cliente") + " " + resultSet.getString("apellido_contacto") + " " + resultSet.getString("telefono"));
             }
-            cerrarConexion(conexion);
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error al cerrar la conexión: " + e.getMessage());
+        }
+    }
+
+    public static void buscarClientesPorEmpleado(Connection conexion, int id_empleado) {
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery(
+                "SELECT cliente.* FROM cliente JOIN empleado ON empleado.id_empleado = cliente.id_empleado WHERE empleado.codigo_empleado = " + id_empleado);
+                resultSet.last();
+                int size = resultSet.getRow();
+
+                if (size == 0) {
+                    System.out.println("No hay clientes para el empleado con código: " + id_empleado);
+                }else{
+                    resultSet.beforeFirst();
+                    while (resultSet.next()) {
+                        System.out.println(resultSet.getString("nombre_cliente") + " " + resultSet.getString("apellido_contacto") + " " + resultSet.getString("telefono"));
+                    }
+                }
+
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
         } catch (Exception e) {
