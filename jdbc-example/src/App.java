@@ -7,7 +7,9 @@ import java.sql.Statement;
 public class App {
     public static void main(String[] args) throws Exception {
         Connection conexion = getConnection();
-        exampleStatement(conexion);
+        //exampleStatement(conexion);
+        //buscarClientes(conexion);
+        buscarClientePorCodigo(conexion, 1);
         cerrarConexion(conexion);
     }
     public static Connection getConnection() throws Exception {
@@ -54,5 +56,30 @@ public class App {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
         }
     }
+    public static void buscarClientes(Connection conexion) {
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM cliente ");
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("nombre_cliente") + " " + resultSet.getString("apellido_contacto") + " " + resultSet.getString("telefono"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
+    }
 
+    public static void buscarClientePorCodigo(Connection conexion, int id) {
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM cliente WHERE codigo_cliente = " + id);
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("nombre_cliente") + " " + resultSet.getString("apellido_contacto") + " " + resultSet.getString("telefono"));
+            }
+            cerrarConexion(conexion);
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error al cerrar la conexión: " + e.getMessage());
+        }
+    }
 }
