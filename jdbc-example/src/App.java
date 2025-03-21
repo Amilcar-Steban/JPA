@@ -11,7 +11,8 @@ public class App {
         //buscarClientes(conexion);
         //buscarClientePorCodigo(conexion, 1);
         //buscarClientesPorEmpleado(conexion, 5);
-        getProductosParaReponer(conexion, 20);
+        //getProductosParaReponer(conexion, 20);
+        getProductosGama(conexion, "'Herramientas'");
         cerrarConexion(conexion);
     }
     public static Connection getConnection() throws Exception {
@@ -114,6 +115,18 @@ public class App {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM producto WHERE cantidad_en_stock < "+punto_reposicion);
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("nombre") + " tiene " + resultSet.getString("cantidad_en_stock") + " unidades en stock");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
+    }
+
+    public static void getProductosGama(Connection conexion, String nameGama) {
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT producto.*, gama_producto.* FROM producto JOIN gama_producto ON producto.id_gama = gama_producto.id_gama WHERE gama_producto.gama = "+nameGama);
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("producto.id_producto") + "  " + resultSet.getString("producto.nombre")  + "  " + resultSet.getString("gama_producto.id_gama")  + "  " +  resultSet.getString("gama_producto.gama"));
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
