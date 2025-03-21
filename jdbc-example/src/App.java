@@ -10,7 +10,8 @@ public class App {
         //exampleStatement(conexion);
         //buscarClientes(conexion);
         //buscarClientePorCodigo(conexion, 1);
-        buscarClientesPorEmpleado(conexion, 5);
+        //buscarClientesPorEmpleado(conexion, 5);
+        getProductosParaReponer(conexion, 20);
         cerrarConexion(conexion);
     }
     public static Connection getConnection() throws Exception {
@@ -104,6 +105,18 @@ public class App {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Error al cerrar la conexión: " + e.getMessage());
+        }
+    }
+
+    public static void getProductosParaReponer(Connection conexion, int punto_reposicion) {
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM producto WHERE cantidad_en_stock < "+punto_reposicion);
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("nombre") + " tiene " + resultSet.getString("cantidad_en_stock") + " unidades en stock");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
         }
     }
 }
