@@ -1,11 +1,13 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class App {
     public static void main(String[] args) throws Exception {
         Connection conexion = getConnection();
-        
+        exampleStatement(conexion);
         cerrarConexion(conexion);
     }
     public static Connection getConnection() throws Exception {
@@ -40,4 +42,17 @@ public class App {
             }
         }
     }
+
+    public static void exampleStatement(Connection conexion) {
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM cliente");
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("nombre_cliente") + " " + resultSet.getString("apellido_contacto"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
+    }
+
 }
