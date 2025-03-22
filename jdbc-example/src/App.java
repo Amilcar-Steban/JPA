@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,7 +13,8 @@ public class App {
         //buscarClientePorCodigo(conexion, 1);
         //buscarClientesPorEmpleado(conexion, 5);
         //getProductosParaReponer(conexion, 20);
-        getProductosGama(conexion, "'Herramientas'");
+        //getProductosGama(conexion, "'Herramientas'");
+        getPedidosPorCliente(conexion, 1);
         cerrarConexion(conexion);
     }
     public static Connection getConnection() throws Exception {
@@ -127,6 +129,20 @@ public class App {
             ResultSet resultSet = statement.executeQuery("SELECT producto.*, gama_producto.* FROM producto JOIN gama_producto ON producto.id_gama = gama_producto.id_gama WHERE gama_producto.gama = "+nameGama);
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("producto.id_producto") + "  " + resultSet.getString("producto.nombre")  + "  " + resultSet.getString("gama_producto.id_gama")  + "  " +  resultSet.getString("gama_producto.gama"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
+    }
+
+    public static void getPedidosPorCliente( Connection conexion, int id) {
+        try {
+            PreparedStatement statement = conexion.prepareStatement("SELECT * FROM pedido JOIN cliente ON pedido.id_cliente = cliente.id_cliente WHERE pedido.id_cliente = ?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("id_pedido") + " " + resultSet.getString("fecha_pedido") + " " + resultSet.getString("estado") + " " + resultSet.getString("cliente.nombre_cliente"));
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
