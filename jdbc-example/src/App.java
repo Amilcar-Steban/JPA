@@ -14,7 +14,8 @@ public class App {
         //buscarClientesPorEmpleado(conexion, 5);
         //getProductosParaReponer(conexion, 20);
         //getProductosGama(conexion, "'Herramientas'");
-        getPedidosPorCliente(conexion, 1);
+        //getPedidosPorCliente(conexion, 1);
+        getPedidosPorEstado(conexion, String.valueOf("recHazado").toLowerCase());
         cerrarConexion(conexion);
     }
     public static Connection getConnection() throws Exception {
@@ -143,6 +144,20 @@ public class App {
 
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("id_pedido") + " " + resultSet.getString("fecha_pedido") + " " + resultSet.getString("estado") + " " + resultSet.getString("cliente.nombre_cliente"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
+    }
+
+    public static void getPedidosPorEstado( Connection connection, String estado) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM pedido WHERE LOWER(estado) = ?");
+            statement.setString(1, estado);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("id_pedido") + " " + resultSet.getString("fecha_pedido") + " " + resultSet.getString("estado"));
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
