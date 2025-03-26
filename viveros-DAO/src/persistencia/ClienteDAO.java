@@ -61,4 +61,43 @@ public class ClienteDAO extends DAO {
         insertarModificarEliminarDataBase(sql);
     }
 
+    public void buscarClienteId(int id) throws Exception{
+        if (id <= 0) {
+            throw new Exception("Debe indicar el id del cliente");
+            
+        }else {
+            try {
+                String sql = "SELECT * FROM cliente WHERE id_cliente = " + id;
+                consultarDataBase(sql);
+                Cliente cliente = new Cliente();
+                // Verificar si hay resultados y mover el cursor
+                if (resultSet.next()) {
+                    cliente.setIdCliente(resultSet.getInt("id_cliente"));
+                    cliente.setCodigoCliente(resultSet.getInt("codigo_cliente"));
+                    cliente.setNombreCliente(resultSet.getString("nombre_cliente"));
+                    cliente.setNombreContacto(resultSet.getString("nombre_contacto"));
+                    cliente.setApellidoContacto(resultSet.getString("apellido_contacto"));
+                    cliente.setTelefono(resultSet.getString("telefono"));
+                    cliente.setFax(resultSet.getString("fax"));
+                    cliente.setCiudad(resultSet.getString("ciudad"));
+                    cliente.setRegion(resultSet.getString("region"));
+                    cliente.setPais(resultSet.getString("pais"));
+                    cliente.setCodigoPostal(resultSet.getString("codigo_postal"));
+                    cliente.setIdEmpleado(resultSet.getInt("id_empleado"));
+                    cliente.setLimiteCredito(resultSet.getDouble("limite_credito"));
+                    System.out.println(cliente.toString());
+                } else {
+                    System.out.println("No se encontró ningún cliente con ID: " + id);
+                }
+                System.out.println(cliente.toString());
+            } catch (Exception e) {
+                System.err.println("Error al buscar el cliente: " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                closeDataBase();
+            }
+        }
+    
+    }
+
 }
