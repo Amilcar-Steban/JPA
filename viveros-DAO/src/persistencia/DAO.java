@@ -5,24 +5,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DAO {
+public abstract  class DAO {
 
     protected Connection conexion = null;
     protected ResultSet resultSet = null;
     protected Statement statement = null;
 
-    private final String HOST = "localhost";
+    private final String HOST = "127.0.0.1";
     private final String PORT = "3306";
     private final String DATABSE = "viveros";
     private final String USER = "root";
     private final String PASSWORD = "Pass123.";
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private final String ZONA = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
     protected void connectDataBase() throws SQLException, ClassNotFoundException {
         try {
             Class.forName(DRIVER);
-            String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABSE;
+            String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABSE+ZONA;
             conexion = java.sql.DriverManager.getConnection(url, USER, PASSWORD);
+            System.out.println("Conexión exitosa");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,8 +55,6 @@ public class DAO {
 
             System.out.println(ex.getMessage());
             throw ex;
-        } finally {
-            closeDataBase();
         }
     }
 

@@ -158,21 +158,21 @@ public class Cliente {
     
     @Override
     public String toString() {
-        return "Cliente{" +
-                "idCliente=" + idCliente +
-                ", codigoCliente=" + codigoCliente +
-                ", nombreCliente='" + nombreCliente + '\'' +
-                ", nombreContacto='" + nombreContacto + '\'' +
-                ", apellidoContacto='" + apellidoContacto + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", fax='" + fax + '\'' +
-                ", ciudad='" + ciudad + '\'' +
-                ", region='" + region + '\'' +
-                ", pais='" + pais + '\'' +
-                ", codigoPostal='" + codigoPostal + '\'' +
-                ", idEmpleado=" + idEmpleado +
-                ", limiteCredito=" + limiteCredito +
-                '}';
+        return "{" +
+               "\"idCliente\":" + idCliente +
+               ", \"codigoCliente\":" + codigoCliente +
+               ", \"nombreCliente\":\"" + nombreCliente + "\"" +
+               ", \"nombreContacto\":\"" + nombreContacto + "\"" +
+               ", \"apellidoContacto\":\"" + apellidoContacto + "\"" +
+               ", \"telefono\":\"" + telefono + "\"" +
+               ", \"fax\":\"" + fax + "\"" +
+               ", \"ciudad\":\"" + ciudad + "\"" +
+               ", \"region\":\"" + region + "\"" +
+               ", \"pais\":\"" + pais + "\"" +
+               ", \"codigoPostal\":\"" + codigoPostal + "\"" +
+               ", \"idEmpleado\":" + idEmpleado +
+               ", \"limiteCredito\":" + limiteCredito +
+               "}";
     }
 
 }

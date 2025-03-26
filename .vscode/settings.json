@@ -1,6 +1,9 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "mysql-connector-java-8.0.13.jar"
+        "mysql-connector-java-8.0.13.jar",
+        "json-20250107.jar",
+        "viveros-DAO/lib/json-20250107.jar",
+        "viveros-DAO/lib/mysql-connector-java-8.0.13.jar"
     ]
 }
