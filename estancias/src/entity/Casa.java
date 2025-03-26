@@ -1,4 +1,4 @@
-package entidades;
+package entity;
 
 public class Casa {
     private int idCasa;
